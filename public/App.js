@@ -2,20 +2,23 @@ class ProductRow extends React.Component {
   render() {
     const product = this.props.product;
     console.log("Hi");
-    return React.createElement("tr", null, React.createElement("td", null, product.id), React.createElement("td", null, product.pname), React.createElement("td", null, "$" + product.price), React.createElement("td", null, product.category), React.createElement("td", null, product.image));
+    return React.createElement("tr", null, React.createElement("td", null, product.pname), React.createElement("td", null, "$" + product.price), React.createElement("td", null, product.category), React.createElement("td", null, React.createElement("a", {
+      target: "_blank",
+      href: product.image
+    }, "View")));
   }
 
 }
 
 class ProductTable extends React.Component {
   render() {
-    const ProductRows = this.props.products.map(product => React.createElement(ProductRow, {
+    const productRows = this.props.products.map(product => React.createElement(ProductRow, {
       key: product.id,
       product: product
     }));
     return React.createElement("table", {
       className: "bordered-table"
-    }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "ID"), React.createElement("th", null, "Product Name"), React.createElement("th", null, "Price"), React.createElement("th", null, "Category"), React.createElement("th", null, "Image"))), React.createElement("tbody", null, ProductRows));
+    }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Price"), React.createElement("th", null, "Category"), React.createElement("th", null, "Image"))), React.createElement("tbody", null, productRows));
   }
 
 }
@@ -29,14 +32,15 @@ class ProductAdd extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const form = document.forms.ProductAdd;
+    const priceValue = form.price.value.slice(1);
     const product = {
       category: form.category.value,
-      price: form.price.value,
+      price: priceValue,
       pname: form.pname.value,
       image: form.image.value
     };
     this.props.createproduct(product);
-    form.price.value = "";
+    form.price.value = "$";
     form.pname.value = "";
     form.image.value = "";
   }
@@ -60,7 +64,7 @@ class ProductAdd extends React.Component {
     }, "Accesories")), React.createElement("input", {
       type: "text",
       name: "price",
-      placeholder: "Price per Unit"
+      defaultValue: "$"
     }), React.createElement("input", {
       type: "text",
       name: "pname",

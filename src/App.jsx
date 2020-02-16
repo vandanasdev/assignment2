@@ -7,11 +7,10 @@ class ProductRow extends React.Component
         console.log("Hi");
         return(
             <tr>
-               <td>{product.id}</td>
                <td>{product.pname}</td>
                <td>{"$"+product.price}</td>
                <td>{product.category}</td>
-               <td>{product.image}</td>
+               <td><a target="_blank" href={product.image} >View</a></td>
             </tr>
             
             
@@ -27,13 +26,12 @@ class ProductTable extends React.Component
     render()
     {
 
-        const ProductRows = this.props.products.map(product => <ProductRow key={product.id} product={product} />);
+        const productRows = this.props.products.map(product => <ProductRow key={product.id} product={product} />);
 
         return(
             <table className="bordered-table" >
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Category</th>
@@ -41,7 +39,7 @@ class ProductTable extends React.Component
                     </tr>
                 </thead>
                 <tbody>
-                    {ProductRows} 
+                    {productRows} 
                 </tbody>
             
             </table>
@@ -62,11 +60,13 @@ class ProductAdd extends React.Component
     handleSubmit(e){
         e.preventDefault();
         const form= document.forms.ProductAdd;
+        const priceValue= (form.price.value).slice(1);
         const product={
-            category:form.category.value, price: form.price.value, pname: form.pname.value, image: form.image.value
+            category:form.category.value, price: priceValue, pname: form.pname.value, image: form.image.value
         }
         this.props.createproduct(product);
-        form.price.value=""; form.pname.value="";form.image.value="";
+        form.price.value="$"; form.pname.value="";form.image.value="";
+        
     }
     render()
     {
@@ -79,7 +79,7 @@ class ProductAdd extends React.Component
                     <option value="sweaters">Sweaters</option>
                     <option value="accessories">Accesories</option>
                 </select>
-                <input type="text" name="price" placeholder="Price per Unit" />
+                <input type="text" name="price" defaultValue="$" />
                 <input type="text" name="pname" placeholder="Product Name" />
                 <input type="text" name="image" placeholder="Image" />
                 <button type="submit" > Add </button>
