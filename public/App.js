@@ -1,33 +1,26 @@
-class IssueFilter extends React.Component {
+class ProductRow extends React.Component {
   render() {
-    return React.createElement("div", null, " This is a placeholder for Issue Filter");
-  }
-
-}
-
-class IssueRow extends React.Component {
-  render() {
-    const issue = this.props.issue;
+    const product = this.props.product;
     console.log("Hi");
-    return React.createElement("tr", null, React.createElement("td", null, issue.id), React.createElement("td", null, issue.status), React.createElement("td", null, issue.owner), React.createElement("td", null, issue.created.toDateString()), React.createElement("td", null, issue.effort), React.createElement("td", null, issue.due ? issue.due.toDateString() : ''), React.createElement("td", null, issue.title));
+    return React.createElement("tr", null, React.createElement("td", null, product.id), React.createElement("td", null, product.pname), React.createElement("td", null, "$" + product.price), React.createElement("td", null, product.category), React.createElement("td", null, product.image));
   }
 
 }
 
-class IssueTable extends React.Component {
+class ProductTable extends React.Component {
   render() {
-    const issueRows = this.props.issues.map(issue => React.createElement(IssueRow, {
-      key: issue.id,
-      issue: issue
+    const ProductRows = this.props.products.map(product => React.createElement(ProductRow, {
+      key: product.id,
+      product: product
     }));
     return React.createElement("table", {
       className: "bordered-table"
-    }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "ID"), React.createElement("th", null, "Status"), React.createElement("th", null, "Owner"), React.createElement("th", null, "Created"), React.createElement("th", null, "Effort"), React.createElement("th", null, "Due Date"), React.createElement("th", null, "Title"))), React.createElement("tbody", null, issueRows));
+    }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "ID"), React.createElement("th", null, "Product Name"), React.createElement("th", null, "Price"), React.createElement("th", null, "Category"), React.createElement("th", null, "Image"))), React.createElement("tbody", null, ProductRows));
   }
 
 }
 
-class IssueAdd extends React.Component {
+class ProductAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,29 +28,47 @@ class IssueAdd extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const form = document.forms.issueAdd;
-    const issue = {
-      owner: form.owner.value,
-      title: form.title.value,
-      status: 'New'
+    const form = document.forms.ProductAdd;
+    const product = {
+      category: form.category.value,
+      price: form.price.value,
+      pname: form.pname.value,
+      image: form.image.value
     };
-    this.props.createIssue(issue);
-    form.owner.value = "";
-    form.title.value = "";
+    this.props.createproduct(product);
+    form.price.value = "";
+    form.pname.value = "";
+    form.image.value = "";
   }
 
   render() {
     return React.createElement("form", {
-      name: "issueAdd",
+      name: "ProductAdd",
       onSubmit: this.handleSubmit
-    }, React.createElement("input", {
+    }, React.createElement("select", {
+      id: "category"
+    }, React.createElement("option", {
+      value: "shirts"
+    }, "Shirts"), React.createElement("option", {
+      value: "jeans"
+    }, "Jeans"), React.createElement("option", {
+      value: "jackets"
+    }, "Jackets"), React.createElement("option", {
+      value: "sweaters"
+    }, "Sweaters"), React.createElement("option", {
+      value: "accessories"
+    }, "Accesories")), React.createElement("input", {
       type: "text",
-      name: "owner",
-      placeholder: "Owner "
+      name: "price",
+      placeholder: "Price per Unit"
     }), React.createElement("input", {
       type: "text",
-      name: "title",
-      placeholder: "Title"
+      name: "pname",
+      placeholder: "Product Name"
+    }), React.createElement("input", {
+      type: "text",
+      name: "image",
+      placeholder: "Image"
     }), React.createElement("button", {
       type: "submit"
     }, " Add "));
@@ -65,46 +76,33 @@ class IssueAdd extends React.Component {
 
 }
 
-class IssueList extends React.Component {
+class ProductList extends React.Component {
   constructor() {
     super();
     this.state = {
-      issues: []
+      products: []
     };
-    this.createIssue = this.createIssue.bind(this);
+    this.createproduct = this.createproduct.bind(this);
   }
 
-  createIssue(issue) {
-    issue.id = this.state.issues.length + 1;
-    issue.created = new Date();
-    const newIssueList = this.state.issues.slice();
-    newIssueList.push(issue);
+  createproduct(product) {
+    product.id = this.state.products.length + 1;
+    const newProductList = this.state.products.slice();
+    newProductList.push(product);
     this.setState({
-      issues: newIssueList
+      products: newProductList
     });
   }
 
-  componentDidMount() {
-    this.loadData();
-  }
-
-  loadData() {
-    setTimeout(() => {
-      this.setState({
-        issues: initialIssues
-      });
-    }, 500);
-  }
-
   render() {
-    return React.createElement(React.Fragment, null, React.createElement("h1", null, "Issue Tracker"), React.createElement(IssueFilter, null), React.createElement("hr", null), React.createElement(IssueTable, {
-      issues: this.state.issues
-    }), React.createElement("hr", null), React.createElement(IssueAdd, {
-      createIssue: this.createIssue
+    return React.createElement(React.Fragment, null, React.createElement("h1", null, "My Company Inventory"), React.createElement("div", null, "Showing all available products"), React.createElement("hr", null), React.createElement(ProductTable, {
+      products: this.state.products
+    }), React.createElement("hr", null), React.createElement(ProductAdd, {
+      createproduct: this.createproduct
     }));
   }
 
 }
 
-const element = React.createElement(IssueList, null);
+const element = React.createElement(ProductList, null);
 ReactDOM.render(element, document.getElementById('myCompInventory'));

@@ -1,29 +1,17 @@
-class IssueFilter extends React.Component
-{
-    render()
-    {
-        return(
-            <div> This is a placeholder for Issue Filter</div>
-        );
-        
-    }
-}
 
-class IssueRow extends React.Component
+class ProductRow extends React.Component
 {
     render(){
-        const issue= this.props.issue;
+        const product= this.props.product;
         
         console.log("Hi");
         return(
             <tr>
-               <td>{issue.id}</td>
-               <td>{issue.status}</td>
-               <td>{issue.owner}</td>
-               <td>{issue.created.toDateString()}</td>
-               <td>{issue.effort}</td>
-               <td>{issue.due ? issue.due.toDateString() : ''}</td>
-               <td>{issue.title}</td>
+               <td>{product.id}</td>
+               <td>{product.pname}</td>
+               <td>{"$"+product.price}</td>
+               <td>{product.category}</td>
+               <td>{product.image}</td>
             </tr>
             
             
@@ -33,29 +21,27 @@ class IssueRow extends React.Component
     }
 }
 
-class IssueTable extends React.Component
+class ProductTable extends React.Component
 {
   
     render()
     {
 
-        const issueRows = this.props.issues.map(issue => <IssueRow key={issue.id} issue={issue} />);
+        const ProductRows = this.props.products.map(product => <ProductRow key={product.id} product={product} />);
 
         return(
             <table className="bordered-table" >
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Status</th>
-                        <th>Owner</th>
-                        <th>Created</th>
-                        <th>Effort</th>
-                        <th>Due Date</th>
-                        <th>Title</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {issueRows} 
+                    {ProductRows} 
                 </tbody>
             
             </table>
@@ -64,7 +50,7 @@ class IssueTable extends React.Component
     }
 }
 
-class IssueAdd extends React.Component
+class ProductAdd extends React.Component
 {
     constructor()
     {
@@ -75,19 +61,27 @@ class IssueAdd extends React.Component
 
     handleSubmit(e){
         e.preventDefault();
-        const form= document.forms.issueAdd;
-        const issue={
-            owner:form.owner.value, title: form.title.value, status: 'New'
+        const form= document.forms.ProductAdd;
+        const product={
+            category:form.category.value, price: form.price.value, pname: form.pname.value, image: form.image.value
         }
-        this.props.createIssue(issue);
-        form.owner.value=""; form.title.value="";
+        this.props.createproduct(product);
+        form.price.value=""; form.pname.value="";form.image.value="";
     }
     render()
     {
         return(
-            <form name="issueAdd" onSubmit={this.handleSubmit}>
-                <input type="text" name="owner" placeholder="Owner " />
-                <input type="text" name="title" placeholder="Title" />
+            <form name="ProductAdd" onSubmit={this.handleSubmit}>
+                <select id="category">
+                    <option value="shirts">Shirts</option>
+                    <option value="jeans">Jeans</option>
+                    <option value="jackets">Jackets</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="accessories">Accesories</option>
+                </select>
+                <input type="text" name="price" placeholder="Price per Unit" />
+                <input type="text" name="pname" placeholder="Product Name" />
+                <input type="text" name="image" placeholder="Image" />
                 <button type="submit" > Add </button>
             </form>
         );
@@ -97,51 +91,40 @@ class IssueAdd extends React.Component
 
 
 
-class IssueList extends React.Component
+class ProductList extends React.Component
 {
     constructor()
     {
         super();
-        this.state= {issues: []};
-        this.createIssue= this.createIssue.bind(this);
+        this.state= {products: []};
+        this.createproduct= this.createproduct.bind(this);
     }
 
-    createIssue(issue){
-        issue.id= this.state.issues.length + 1;
-        issue.created = new Date();
-        const newIssueList = this.state.issues.slice();
-        newIssueList.push(issue);
-        this.setState({issues: newIssueList});
+    createproduct(product){
+        product.id= this.state.products.length + 1;
+        const newProductList = this.state.products.slice();
+        newProductList.push(product);
+        this.setState({products: newProductList});
     }
 
-    componentDidMount()
-    {
-        this.loadData();
-    }
     
-    loadData()
-    {
-        setTimeout(() => { 
-          this.setState({issues : initialIssues})  
-        }, 500);
-    }
 
     render(){
 
         return(
             <React.Fragment>
-                <h1>Issue Tracker</h1>
-                <IssueFilter />
+                <h1>My Company Inventory</h1>
+                <div>Showing all available products</div>
                 <hr />
-                <IssueTable issues={this.state.issues}/>
+                <ProductTable products={this.state.products}/>
                 <hr />
-                <IssueAdd createIssue={this.createIssue}/>
+                <ProductAdd createproduct={this.createproduct}/>
             </React.Fragment>
         );
 
     }
 }
 
-const element = <IssueList />;
+const element = <ProductList />;
 
 ReactDOM.render(element, document.getElementById('myCompInventory'));
