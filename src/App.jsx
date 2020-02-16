@@ -10,7 +10,7 @@ class ProductRow extends React.Component
                <td>{product.pname}</td>
                <td>{"$"+product.price}</td>
                <td>{product.category}</td>
-               <td><a target="_blank" href={product.image} >View</a></td>
+               <td><a target="_blank" href={product.imageUrl} >View</a></td>
             </tr>
             
             
@@ -62,16 +62,17 @@ class ProductAdd extends React.Component
         const form= document.forms.ProductAdd;
         const priceValue= (form.price.value).slice(1);
         const product={
-            category:form.category.value, price: priceValue, pname: form.pname.value, image: form.image.value
+            category:form.category.value, price: priceValue, pname: form.pname.value, imageUrl: form.imageUrl.value
         }
         this.props.createproduct(product);
-        form.price.value="$"; form.pname.value="";form.image.value="";
+        form.price.value="$"; form.pname.value="";form.imageUrl.value="";
         
     }
     render()
     {
         return(
             <form name="ProductAdd" onSubmit={this.handleSubmit}>
+                <label>Category </label>
                 <select id="category">
                     <option value="shirts">Shirts</option>
                     <option value="jeans">Jeans</option>
@@ -79,10 +80,13 @@ class ProductAdd extends React.Component
                     <option value="sweaters">Sweaters</option>
                     <option value="accessories">Accesories</option>
                 </select>
+                <label>Price </label>
                 <input type="text" name="price" defaultValue="$" />
+                <label>Product Name </label>
                 <input type="text" name="pname" placeholder="Product Name" />
-                <input type="text" name="image" placeholder="Image" />
-                <button type="submit" > Add </button>
+                <label>Image URL </label>
+                <input type="text" name="imageUrl" placeholder="Image" />
+                <button type="submit" > Add Product</button>
             </form>
         );
        

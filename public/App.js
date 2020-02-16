@@ -4,7 +4,7 @@ class ProductRow extends React.Component {
     console.log("Hi");
     return React.createElement("tr", null, React.createElement("td", null, product.pname), React.createElement("td", null, "$" + product.price), React.createElement("td", null, product.category), React.createElement("td", null, React.createElement("a", {
       target: "_blank",
-      href: product.image
+      href: product.imageUrl
     }, "View")));
   }
 
@@ -37,19 +37,19 @@ class ProductAdd extends React.Component {
       category: form.category.value,
       price: priceValue,
       pname: form.pname.value,
-      image: form.image.value
+      imageUrl: form.imageUrl.value
     };
     this.props.createproduct(product);
     form.price.value = "$";
     form.pname.value = "";
-    form.image.value = "";
+    form.imageUrl.value = "";
   }
 
   render() {
     return React.createElement("form", {
       name: "ProductAdd",
       onSubmit: this.handleSubmit
-    }, React.createElement("select", {
+    }, React.createElement("label", null, "Category "), React.createElement("select", {
       id: "category"
     }, React.createElement("option", {
       value: "shirts"
@@ -61,21 +61,21 @@ class ProductAdd extends React.Component {
       value: "sweaters"
     }, "Sweaters"), React.createElement("option", {
       value: "accessories"
-    }, "Accesories")), React.createElement("input", {
+    }, "Accesories")), React.createElement("label", null, "Price "), React.createElement("input", {
       type: "text",
       name: "price",
       defaultValue: "$"
-    }), React.createElement("input", {
+    }), React.createElement("label", null, "Product Name "), React.createElement("input", {
       type: "text",
       name: "pname",
       placeholder: "Product Name"
-    }), React.createElement("input", {
+    }), React.createElement("label", null, "Image URL "), React.createElement("input", {
       type: "text",
-      name: "image",
+      name: "imageUrl",
       placeholder: "Image"
     }), React.createElement("button", {
       type: "submit"
-    }, " Add "));
+    }, " Add Product"));
   }
 
 }
