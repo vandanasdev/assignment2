@@ -1,7 +1,6 @@
 class ProductRow extends React.Component {
   render() {
     const product = this.props.product;
-    console.log("Hi");
     return React.createElement("tr", null, React.createElement("td", null, product.pname), React.createElement("td", null, "$" + product.price), React.createElement("td", null, product.category), React.createElement("td", null, React.createElement("a", {
       target: "_blank",
       href: product.imageUrl
@@ -43,15 +42,22 @@ class ProductAdd extends React.Component {
     form.price.value = "$";
     form.pname.value = "";
     form.imageUrl.value = "";
+    form.category.value = "";
   }
 
   render() {
     return React.createElement("form", {
       name: "ProductAdd",
       onSubmit: this.handleSubmit
-    }, React.createElement("label", null, "Category "), React.createElement("select", {
+    }, React.createElement("section", {
+      className: "grid-1"
+    }, React.createElement("div", null, React.createElement("label", null, "Category "), React.createElement("select", {
       id: "category"
     }, React.createElement("option", {
+      disabled: true,
+      selected: true,
+      value: ""
+    }, " -- Select a product -- "), React.createElement("option", {
       value: "shirts"
     }, "Shirts"), React.createElement("option", {
       value: "jeans"
@@ -61,21 +67,24 @@ class ProductAdd extends React.Component {
       value: "sweaters"
     }, "Sweaters"), React.createElement("option", {
       value: "accessories"
-    }, "Accesories")), React.createElement("label", null, "Price "), React.createElement("input", {
+    }, "Accesories"))), React.createElement("div", {
+      id: "price"
+    }, React.createElement("label", null, "Price "), React.createElement("input", {
       type: "text",
       name: "price",
       defaultValue: "$"
-    }), React.createElement("label", null, "Product Name "), React.createElement("input", {
+    })), React.createElement("div", null, React.createElement("label", null, "Product Name "), React.createElement("input", {
       type: "text",
       name: "pname",
       placeholder: "Product Name"
-    }), React.createElement("label", null, "Image URL "), React.createElement("input", {
+    })), React.createElement("div", null, React.createElement("label", null, "Image URL "), React.createElement("input", {
       type: "text",
       name: "imageUrl",
       placeholder: "Image"
-    }), React.createElement("button", {
-      type: "submit"
-    }, " Add Product"));
+    })), React.createElement("button", {
+      type: "submit",
+      className: "butn"
+    }, " Add Product")));
   }
 
 }
@@ -101,7 +110,7 @@ class ProductList extends React.Component {
   render() {
     return React.createElement(React.Fragment, null, React.createElement("h1", null, "My Company Inventory"), React.createElement("div", null, "Showing all available products"), React.createElement("hr", null), React.createElement(ProductTable, {
       products: this.state.products
-    }), React.createElement("hr", null), React.createElement(ProductAdd, {
+    }), React.createElement("br", null), React.createElement("div", null, " Add a new product to the inventory "), React.createElement("hr", null), React.createElement(ProductAdd, {
       createproduct: this.createproduct
     }));
   }

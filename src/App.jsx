@@ -4,7 +4,6 @@ class ProductRow extends React.Component
     render(){
         const product= this.props.product;
         
-        console.log("Hi");
         return(
             <tr>
                <td>{product.pname}</td>
@@ -65,28 +64,40 @@ class ProductAdd extends React.Component
             category:form.category.value, price: priceValue, pname: form.pname.value, imageUrl: form.imageUrl.value
         }
         this.props.createproduct(product);
-        form.price.value="$"; form.pname.value="";form.imageUrl.value="";
+        form.price.value="$"; form.pname.value="";form.imageUrl.value=""; form.category.value="";
         
     }
     render()
     {
         return(
             <form name="ProductAdd" onSubmit={this.handleSubmit}>
-                <label>Category </label>
-                <select id="category">
-                    <option value="shirts">Shirts</option>
-                    <option value="jeans">Jeans</option>
-                    <option value="jackets">Jackets</option>
-                    <option value="sweaters">Sweaters</option>
-                    <option value="accessories">Accesories</option>
-                </select>
-                <label>Price </label>
-                <input type="text" name="price" defaultValue="$" />
-                <label>Product Name </label>
-                <input type="text" name="pname" placeholder="Product Name" />
-                <label>Image URL </label>
-                <input type="text" name="imageUrl" placeholder="Image" />
-                <button type="submit" > Add Product</button>
+                <section className="grid-1">
+                    <div>
+                        <label>Category </label>
+                        <select id="category" >
+                            <option disabled selected value=""> -- Select a product -- </option>
+                            <option value="shirts">Shirts</option>
+                            <option value="jeans">Jeans</option>
+                            <option value="jackets">Jackets</option>
+                            <option value="sweaters">Sweaters</option>
+                            <option value="accessories">Accesories</option>
+                        </select>
+                    </div>
+                    <div id="price">
+                        <label>Price </label>
+                        <input type="text" name="price" defaultValue="$" />
+                    </div>
+                    <div>
+                        <label>Product Name </label>
+                        <input type="text" name="pname" placeholder="Product Name" />
+                    </div>
+                    <div>
+                        <label>Image URL </label>
+                        <input type="text" name="imageUrl" placeholder="Image" />
+                    </div>
+                    <button type="submit" className="butn"> Add Product</button>
+                </section>
+                
             </form>
         );
        
@@ -121,6 +132,8 @@ class ProductList extends React.Component
                 <div>Showing all available products</div>
                 <hr />
                 <ProductTable products={this.state.products}/>
+                <br />
+                <div> Add a new product to the inventory </div>
                 <hr />
                 <ProductAdd createproduct={this.createproduct}/>
             </React.Fragment>

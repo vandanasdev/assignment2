@@ -1,7 +1,40 @@
+  
 table.bordered-table th,td{ 
     border: 1px solid silver; 
-    padding: 4px;}
+    padding: 4px;
+    text-transform: capitalize;
+    width: 150px;}
 
 
 table.bordered-table {
-    border-collapse: collapse;}
+    border-collapse: collapse;
+    text-align: left;}
+
+#price{
+    display: inline;
+}
+
+/* Added the form elements in the grid to get a table kind of layout */
+
+.grid-1{
+    display:grid;
+    grid-template-columns: 150px 150px;
+    grid-template-rows: auto auto;
+    grid-gap: 20px;
+}
+
+/*.category select {
+    display: none; /*hide original SELECT element:
+  } */
+
+.butn {
+    border: 1px outset;
+    padding: 5px;
+    cursor:pointer;
+    }
+
+.butn:hover{
+    background-color: blue;
+    color:white;
+}
+     
