@@ -69,7 +69,7 @@ class ProductAdd extends React.Component {
       value: "accessories"
     }, "Accesories"))), React.createElement("div", {
       id: "price"
-    }, React.createElement("label", null, "Price "), React.createElement("input", {
+    }, React.createElement("label", null, "Price Per Unit"), React.createElement("input", {
       type: "text",
       name: "price",
       defaultValue: "$"

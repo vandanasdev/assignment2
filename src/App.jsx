@@ -84,7 +84,7 @@ class ProductAdd extends React.Component
                         </select>
                     </div>
                     <div id="price">
-                        <label>Price </label>
+                        <label>Price Per Unit</label>
                         <input type="text" name="price" defaultValue="$" />
                     </div>
                     <div>
