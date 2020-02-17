@@ -75,12 +75,10 @@ class ProductAdd extends React.Component {
       defaultValue: "$"
     })), React.createElement("div", null, React.createElement("label", null, "Product Name "), React.createElement("input", {
       type: "text",
-      name: "pname",
-      placeholder: "Product Name"
+      name: "pname"
     })), React.createElement("div", null, React.createElement("label", null, "Image URL "), React.createElement("input", {
       type: "text",
-      name: "imageUrl",
-      placeholder: "Image"
+      name: "imageUrl"
     })), React.createElement("button", {
       type: "submit",
       className: "butn"

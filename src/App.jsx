@@ -89,11 +89,11 @@ class ProductAdd extends React.Component
                     </div>
                     <div>
                         <label>Product Name </label>
-                        <input type="text" name="pname" placeholder="Product Name" />
+                        <input type="text" name="pname"  />
                     </div>
                     <div>
                         <label>Image URL </label>
-                        <input type="text" name="imageUrl" placeholder="Image" />
+                        <input type="text" name="imageUrl"  />
                     </div>
                     <button type="submit" className="butn"> Add Product</button>
                 </section>
